@@ -1,0 +1,23 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/cinema}
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  jackson:
+    time-zone: UTC
+server:
+  port: ${SERVER_PORT:8080}
+security:
+  jwt:
+    secret: ${JWT_SECRET:change-me-super-secret-key-change-me-super-secret-key}
+    access-exp-min: 30
+    refresh-exp-days: 7
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  stripe-secret: ${STRIPE_SECRET:sk_test_123}
+  stripe-webhook: ${STRIPE_WEBHOOK_SECRET:whsec_123}
