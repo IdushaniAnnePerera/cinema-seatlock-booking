@@ -5,7 +5,6 @@ Monorepo with Spring Boot 3 + React/Vite implementing movie discovery, real-time
 ## Tech Stack
 - **Backend**: Spring Boot 3, Spring Security, JWT access/refresh, MongoDB, Redis, STOMP WebSocket, Swagger/OpenAPI, Stripe SDK
 - **Frontend**: React + Vite + TypeScript, TailwindCSS (dark default), TanStack Query, React Router, Recharts
-- **Infra**: Docker Compose, GitHub Actions CI
 
 ## Features
 - Customer: browse movies/showtimes, select seats, hold (5 min), confirm booking, ticket token
@@ -15,13 +14,10 @@ Monorepo with Spring Boot 3 + React/Vite implementing movie discovery, real-time
 - Seeded starter data and role users
 
 ## Local Run
-```bash
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-docker compose up --build
-```
-- Frontend: http://localhost:5173
+Run backend and frontend separately in your local environment:
+
 - Backend API: http://localhost:8080
+- Frontend: http://localhost:5173
 - Swagger: http://localhost:8080/swagger-ui
 
 ### Seeded Credentials
