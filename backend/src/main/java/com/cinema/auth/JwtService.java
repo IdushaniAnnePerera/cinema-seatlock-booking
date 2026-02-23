@@ -1,7 +1,6 @@
 package com.cinema.auth;
 
 import com.cinema.domain.Enums;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,13 +26,9 @@ public class JwtService {
     return Jwts.builder().subject(userId).claims(Map.of("role", role.name(), "type", "access"))
       .issuedAt(new Date()).expiration(Date.from(Instant.now().plusSeconds(accessExpMin * 60))).signWith(key).compact();
   }
-
   public String refreshToken(String userId) {
     return Jwts.builder().subject(userId).claims(Map.of("type", "refresh"))
       .issuedAt(new Date()).expiration(Date.from(Instant.now().plusSeconds(refreshExpDays * 86400))).signWith(key).compact();
   }
-
-  public Claims parse(String token) {
-    return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
-  }
+  public Map<String, Object> parse(String token) { return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload(); }
 }

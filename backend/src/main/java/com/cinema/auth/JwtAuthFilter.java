@@ -1,7 +1,6 @@
 package com.cinema.auth;
 
 import com.cinema.repo.UserRepository;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,20 +25,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     String header = request.getHeader("Authorization");
     if (header != null && header.startsWith("Bearer ")) {
       try {
-        Claims claims = jwtService.parse(header.substring(7));
-        if ("access".equals(claims.get("type", String.class))) {
+        var claims = jwtService.parse(header.substring(7));
+        if ("access".equals(claims.get("type"))) {
           String uid = claims.getSubject();
           userRepository.findById(uid).ifPresent(user -> {
-            var auth = new UsernamePasswordAuthenticationToken(
-              uid,
-              null,
-              List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
-            );
+            var auth = new UsernamePasswordAuthenticationToken(uid, null, List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())));
             SecurityContextHolder.getContext().setAuthentication(auth);
           });
         }
-      } catch (Exception ignored) {
-      }
+      } catch (Exception ignored) {}
     }
     filterChain.doFilter(request, response);
   }
